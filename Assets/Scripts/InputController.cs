@@ -1,13 +1,17 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InputController : MonoBehaviour
 {
     public float InputX { get; private set; }
-    public float InputY { get; private set; }
+
+    [HideInInspector] public UnityEvent JumpPressed = new UnityEvent();
 
     private void Update()
     {
         InputX = Input.GetAxis("Horizontal");
-        InputY = Input.GetAxis("Vertical");
+
+        if (Input.GetButtonDown("Jump"))
+            JumpPressed.Invoke();
     }
 }
