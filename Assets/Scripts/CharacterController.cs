@@ -32,6 +32,5 @@ public class CharacterController2D : MonoBehaviour
     private void FixedUpdate()
     {
         IsGrounded = Physics2D.OverlapCircle(_groundChecker.position, _groundCheckRadius, _groundLayer);
-        Debug.Log(IsGrounded);
     }
 }

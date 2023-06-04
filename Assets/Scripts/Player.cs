@@ -1,38 +1,45 @@
 using UnityEngine;
 
-[RequireComponent(typeof(InputController), typeof(CharacterController2D))]
-public class Player : MonoBehaviour
+[RequireComponent(typeof(InputController))]
+public class Player : Person
 {
-    [SerializeField] private float _moveSpeed = 4f;
     [SerializeField] private float _jumpForce = 6f;
     [SerializeField] private int _jumpsCount = 1;
 
     private InputController _inputController;
-    private CharacterController2D _characterController2D;
-    private Vector3 _defaultScale;
-    private bool _isFlipped = false;
-    private int _currentJumpsCount = 0;
+    private int _currentJumpsCount;
 
-    private void Start()
+    protected override void Start()
     {
-        _inputController = GetComponent<InputController>();
-        _characterController2D = GetComponent<CharacterController2D>();
+        base.Start();
 
+        _inputController = GetComponent<InputController>();
         _inputController.JumpPressed.AddListener(OnJumpPressed);
 
-        _defaultScale = transform.localScale;
+        ResetJumps();
     }
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
-        _characterController2D.Move(new Vector2(_inputController.InputX, 0f) * _moveSpeed);
+        base.FixedUpdate();
 
-        if (_characterController2D.IsGrounded && _currentJumpsCount > 0)
+        if (CharacterController2D.IsGrounded && _currentJumpsCount > 0)
         {
-            _currentJumpsCount = 0;
+            ResetJumps();
         }
+    }
 
-        TryFlip();
+    protected override void Move()
+    {
+        CharacterController2D.Move(new Vector2(_inputController.InputX, 0f) * MoveSpeed);
+    }
+
+    protected override void TryFlip()
+    {
+        if ((_inputController.InputX > 0 && IsFlipped) || (_inputController.InputX < 0 && IsFlipped == false))
+        {
+            Flip();
+        }
     }
 
     private void OnJumpPressed()
@@ -41,23 +48,12 @@ public class Player : MonoBehaviour
 
         if (_currentJumpsCount < _jumpsCount)
         {
-            _characterController2D.Jump(_jumpForce);
+            CharacterController2D.Jump(_jumpForce);
         }
     }
 
-    private void TryFlip()
+    private void ResetJumps()
     {
-        if ((_inputController.InputX > 0 && _isFlipped) || (_inputController.InputX < 0 && _isFlipped == false))
-        {
-            Flip();
-        }
-    }
-
-    private void Flip()
-    {
-        float newScalex = _isFlipped ? _defaultScale.x : -_defaultScale.x;
-
-        transform.localScale = new Vector3(newScalex, _defaultScale.y, _defaultScale.z);
-        _isFlipped = !_isFlipped;
+        _currentJumpsCount = 0;
     }
 }
