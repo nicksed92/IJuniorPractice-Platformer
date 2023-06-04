@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(InputController))]
 public class Player : Person
@@ -8,6 +9,8 @@ public class Player : Person
 
     private InputController _inputController;
     private int _currentJumpsCount;
+
+    public static UnityEvent<int> Collected = new UnityEvent<int>();
 
     protected override void Start()
     {
@@ -39,6 +42,14 @@ public class Player : Person
         if ((_inputController.InputX > 0 && IsFlipped) || (_inputController.InputX < 0 && IsFlipped == false))
         {
             Flip();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out ICollectable collectable))
+        {
+            Collected.Invoke(collectable.Collect());
         }
     }
 
