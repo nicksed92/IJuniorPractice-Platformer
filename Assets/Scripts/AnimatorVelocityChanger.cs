@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator), typeof(MovementController))]
 public class AnimatorVelocityChanger : MonoBehaviour
 {
-    private MovementController _characterController2D;
+    private MovementController _movementController;
     private Animator _animator;
 
     private int _velocityX = Animator.StringToHash("VelocityX");
@@ -12,15 +12,15 @@ public class AnimatorVelocityChanger : MonoBehaviour
     private void Start()
     {
         _animator = GetComponent<Animator>();
-        _characterController2D = GetComponent<MovementController>();
+        _movementController = GetComponent<MovementController>();
     }
 
     private void Update()
     {
         if (_velocityX != 0)
-            _animator.SetFloat(_velocityX, _characterController2D.VelocityX);
+            _animator.SetFloat(_velocityX, _movementController.VelocityX);
 
         if (_velocityY != 0)
-            _animator.SetFloat(_velocityY, _characterController2D.VelocityY);
+            _animator.SetFloat(_velocityY, _movementController.VelocityY);
     }
 }

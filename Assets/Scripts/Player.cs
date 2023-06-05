@@ -26,7 +26,7 @@ public class Player : Person
     {
         base.FixedUpdate();
 
-        if (CharacterController2D.IsGrounded && _currentJumpsCount > 0)
+        if (MovementController.IsGrounded && _currentJumpsCount > 0)
         {
             ResetJumps();
         }
@@ -42,7 +42,7 @@ public class Player : Person
 
     protected override void Move()
     {
-        CharacterController2D.Move(new Vector2(_inputController.InputX, 0f) * MoveSpeed);
+        MovementController.Move(new Vector2(_inputController.InputX, 0f) * MoveSpeed);
     }
 
     protected override void TryFlip()
@@ -59,7 +59,7 @@ public class Player : Person
 
         if (_currentJumpsCount < _jumpsCount)
         {
-            CharacterController2D.Jump(_jumpForce);
+            MovementController.Jump(_jumpForce);
         }
     }
 

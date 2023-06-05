@@ -5,13 +5,13 @@ public class Person : MonoBehaviour
 {
     [SerializeField] protected float MoveSpeed = 4f;
 
-    protected MovementController CharacterController2D;
+    protected MovementController MovementController;
     protected Vector3 DefaultScale;
     protected bool IsFlipped;
 
     protected virtual void Start()
     {
-        CharacterController2D = GetComponent<MovementController>();
+        MovementController = GetComponent<MovementController>();
         DefaultScale = transform.localScale;
         IsFlipped = false;
     }

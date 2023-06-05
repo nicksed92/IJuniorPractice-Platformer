@@ -8,19 +8,19 @@ public class Enemy : Person
     [SerializeField] private Transform _raycastGroundChecker;
 
     private RaycastHit2D _raycastHit2D;
-    private Vector2 _moveDIrection = Vector2.left;
+    private Vector2 _moveDirection = Vector2.left;
     private Vector2 _wallCheckDirection = Vector2.left;
 
     protected override void Move()
     {
-        CharacterController2D.Move(_moveDIrection * MoveSpeed);
+        MovementController.Move(_moveDirection * MoveSpeed);
     }
 
     protected override void TryFlip()
     {
         if (CheckWallOnWay() || CheckGroundOnWay() == false)
         {
-            _moveDIrection = -_moveDIrection;
+            _moveDirection = -_moveDirection;
             _wallCheckDirection = -_wallCheckDirection;
             Flip();
         }
