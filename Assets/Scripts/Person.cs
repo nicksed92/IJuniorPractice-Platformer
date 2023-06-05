@@ -1,17 +1,17 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController2D))]
+[RequireComponent(typeof(MovementController))]
 public class Person : MonoBehaviour
 {
     [SerializeField] protected float MoveSpeed = 4f;
 
-    protected CharacterController2D CharacterController2D;
+    protected MovementController CharacterController2D;
     protected Vector3 DefaultScale;
     protected bool IsFlipped;
 
     protected virtual void Start()
     {
-        CharacterController2D = GetComponent<CharacterController2D>();
+        CharacterController2D = GetComponent<MovementController>();
         DefaultScale = transform.localScale;
         IsFlipped = false;
     }

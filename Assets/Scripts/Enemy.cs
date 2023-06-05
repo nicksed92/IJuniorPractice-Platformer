@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController2D))]
+[RequireComponent(typeof(MovementController))]
 public class Enemy : Person
 {
     [SerializeField] private float _rayDistance = 0.5f;
@@ -10,11 +10,6 @@ public class Enemy : Person
     private RaycastHit2D _raycastHit2D;
     private Vector2 _moveDIrection = Vector2.left;
     private Vector2 _wallCheckDirection = Vector2.left;
-
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-    }
 
     protected override void Move()
     {
